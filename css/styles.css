@@ -45,6 +45,10 @@ p {
     color: #eee;
 }
 
+a {
+    text-decoration: none;
+}
+
 /* ---- Layout Rules ---- */
 main {
     margin: 10vh 1em 10vh;
@@ -65,13 +69,14 @@ section {
 
 /* Navigation Styles*/
 .navbar__menu ul {
-    padding-left: 0;
-    margin: 0;
     text-align: right;
+    height: auto;
+    margin: 0;
 }
 
 .navbar__menu li {
     display: inline-block;
+    margin: 20px;
 }
 
 .navbar__menu .menu__link {
@@ -88,6 +93,13 @@ section {
     transition: ease 0.3s all;
 }
 
+.navbar__menu .menu__link:active {
+    background: #999;
+}
+
+.navbar__menu .menu__link .current-link {
+    background: red;
+}
 /* Header Styles */
 .page__header {
     background: #fff;
@@ -207,6 +219,19 @@ section.your-active-class .landing__container::after {
     opacity: 1;
     animation: rotate 5s linear 0s infinite forwards reverse;
 }
+
+/* Scroll to the top*/
+.scroll-top__button {
+    padding: 20px;
+    position: fixed;
+    bottom: 50px;
+    right: 40px;
+    background-color: rgb(255, 255, 255, 0.9);
+    color: #000;
+    border-radius: 5px;
+    z-index: 2;
+}
+
 
 /* Section Active Styles Keyframe Animations */
 @keyframes rotate {
