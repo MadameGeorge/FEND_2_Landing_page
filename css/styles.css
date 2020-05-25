@@ -222,16 +222,21 @@ section.your-active-class .landing__container::after {
 
 /* Scroll to the top*/
 .scroll-top__button {
-    padding: 20px;
-    position: fixed;
-    bottom: 50px;
-    right: 40px;
     background-color: rgb(255, 255, 255, 0.9);
     color: #000;
-    border-radius: 5px;
+    border-radius: 5px 5px 0 0;
+    padding: 20px;
     z-index: 2;
+    opacity: 1;
+    position: fixed;
+    right: 40px;
+    bottom: 0;
 }
 
+.hidden {
+    opacity: 0;
+    transition: opacity 300ms ease-in-out;
+} 
 
 /* Section Active Styles Keyframe Animations */
 @keyframes rotate {

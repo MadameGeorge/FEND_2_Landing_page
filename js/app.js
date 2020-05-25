@@ -22,7 +22,7 @@
     // Select a ul tag in nav
     const navBar = document.querySelector('#navbar__list');
     // Select sections
-    let sections = document.querySelectorAll('section');
+    let sections = Array.from(document.querySelectorAll('section'));
     // Select links
     let navLinks = document.querySelectorAll('a');
     // Select scroll to the top button
@@ -42,6 +42,15 @@
             rect.bottom >= (navBar.offsetHeight + 100)
         );
     }
+
+    // Check when element is below fold
+    function isBelowFold(element) {
+        elementHeight = element.offsetHeight;
+        return (
+            document.body.scrollTop > elementHeight || document.documentElement.scrollTop > elementHeight
+        )
+    }
+
 
 /**
  * End Helper Functions
@@ -84,6 +93,25 @@
 
     }
 
+    // Add a scroll to top button of the page that’s only visible when the user scrolls below the fold of the page
+    function showButton() {
+        if (isBelowFold(scrollButton)) {
+            console.log('true');
+            scrollButton.classList.remove('hidden');
+            scrollButton.addEventListener('click', () => {
+                window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            })})
+        } else {
+            console.log('false');
+            scrollButton.classList.add('hidden', 'fixed');
+        }
+    }   
+
+    // Add an active state to your navigation items when a section is in the viewport.
+
+
     // Scroll to anchor ID using scrollTO event
     function scrollToSection(){
         navLinks.forEach( navLink => {
@@ -101,6 +129,10 @@
         })
     }
 
+    // Hide fixed navigation bar while not scrolling (it should still be present on page load).
+    // Hint: setTimeout can be used to check when the user is no longer scrolling.
+
+
 
 /**
  * End Main Functions
@@ -114,12 +146,10 @@
     // Scroll to section on link click
     scrollToSection();
 
-    // Set sections as active
-    window.addEventListener('scroll', addActiveState);
+    // Activate scroll functions 
+    window.addEventListener('scroll', () => { 
+        addActiveState(); // Set sections as active
+        showButton(); // Display button on scroll
+    });
 
-    // Scroll to the top
-    scrollButton.addEventListener('click', () => {
-        window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    })})
+    // Make sections collapsible
