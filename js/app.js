@@ -12,7 +12,6 @@
  * JS Standard: ESlint
  *  
 */
-// let sectionNames = Array.from(sections);
 
 /**
  * Define Global Variables
@@ -23,10 +22,6 @@
     const navBar = document.querySelector('#navbar__list');
     // Select sections
     let sections = Array.from(document.querySelectorAll('section'));
-    // Select links
-    let navLinks = document.querySelectorAll('a');
-    // Select scroll to the top button
-    const scrollButton = document.querySelector('.scroll-top__button');
 
 /**
  * End Global Variables
@@ -71,6 +66,7 @@
                 navLink.classList.add('menu__link');
             // Select section id text and add as href  
             let hrefText = section.getAttribute('id');
+                // Add hash to a id name and add it to the href attribute of navLink
                 navLink.href = '#' + hrefText;     
                 // Add 'a' to list element in the nav
                 navList.appendChild(navLink);
@@ -82,7 +78,8 @@
     }
 
     // Add class 'active' to section when near top of viewport
-    function addActiveState() {
+    function addActiveStateSection() {
+        
         sections.forEach( section => {
             if (isInViewport(section)) {
                 section.classList.add('your-active-class');
@@ -93,10 +90,24 @@
 
     }
 
+     // Add an active state to your navigation items when a section is in the viewport.
+    function addActiveStateLink() {
+        let navLinks = document.getElementsByClassName('menu__link');
+        
+        for (let i = 0; i < sections.length; i++) {
+            if (isInViewport(sections[i])) {
+                navLinks[i].classList.add('current-link');
+            } else {
+                navLinks[i].classList.remove('current-link');
+            }
+        };
+    }
+
     // Add a scroll to top button of the page that’s only visible when the user scrolls below the fold of the page
     function showButton() {
+        const scrollButton = document.querySelector('.scroll-top__button');
+
         if (isBelowFold(scrollButton)) {
-            console.log('true');
             scrollButton.classList.remove('hidden');
             scrollButton.addEventListener('click', () => {
                 window.scrollTo({
@@ -104,26 +115,25 @@
                 behavior: 'smooth'
             })})
         } else {
-            console.log('false');
-            scrollButton.classList.add('hidden', 'fixed');
+            scrollButton.classList.add('hidden');
         }
-    }   
-
-    // Add an active state to your navigation items when a section is in the viewport.
+    }
 
 
     // Scroll to anchor ID using scrollTO event
     function scrollToSection(){
-        navLinks.forEach( navLink => {
-            navLink.addEventListener('click', () => {
-                let linkName = navLink.getAttribute('href');
+        const links = document.querySelectorAll('a[href*=\\#]');
+
+        links.forEach( link => {
+            link.addEventListener('click', event => {
+                event.preventDefault();
+                let linkName = link.getAttribute('href');
                 let linkNumber = linkName.substr(-1);
                 let section = sections[linkNumber-1];
-                let top = section.getBoundingClientRect().top + window.pageYOffset;
-                console.log(top);
+                let top = section.getBoundingClientRect().top + window.pageYOffset - navBar.offsetHeight;
                 window.scrollTo({
                     top,
-                    behavior: 'smooth'     
+                    behavior: 'smooth'
                 });
             })
         })
@@ -131,8 +141,27 @@
 
     // Hide fixed navigation bar while not scrolling (it should still be present on page load).
     // Hint: setTimeout can be used to check when the user is no longer scrolling.
+    let userHasScrolled = false;
+    let userHasHovered = false;
+    const header = document.querySelector('header');
 
+    function hideNav() {
+        let userStoppedScrolling;
+        if (document.body.scrollTop > 100 || 
+            document.documentElement.scrollTop > 100) {
+                console.log('false');
+            if (userHasScrolled === true) {
+                window.clearTimeout(userStoppedScrolling);
+                header.classList.remove('hidden');
+            }
 
+            userStoppedScrolling = window.setTimeout( () => {
+                header.classList.add('hidden');
+            }, 1500);
+        }   
+    }
+
+  
 
 /**
  * End Main Functions
@@ -146,10 +175,23 @@
     // Scroll to section on link click
     scrollToSection();
 
+    // Detect scrolling
+    window.onscroll = () => {
+        userHasScrolled = true;
+    } 
+
+    // Detect if user hovers over the navbar
+    header.onmouseover = () => {
+        userHasHovered = true;
+        console.log('hovering');
+    }
+
     // Activate scroll functions 
     window.addEventListener('scroll', () => { 
-        addActiveState(); // Set sections as active
+        addActiveStateSection(); // Set sections as active
         showButton(); // Display button on scroll
+        hideNav();
+        addActiveStateLink();
     });
 
     // Make sections collapsible

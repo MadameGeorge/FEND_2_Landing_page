@@ -79,7 +79,7 @@ section {
     margin: 20px;
 }
 
-.navbar__menu .menu__link {
+.menu__link {
     display: block;
     padding: 1em;
     font-weight: bold;
@@ -87,19 +87,21 @@ section {
     color: #000;
 }
 
-.navbar__menu .menu__link:hover {
-    background: #333;
+.menu__link:hover {
+    background: #000;
     color: #fff;
     transition: ease 0.3s all;
 }
 
-.navbar__menu .menu__link:active {
+.menu__link:active {
     background: #999;
 }
 
-.navbar__menu .menu__link .current-link {
-    background: red;
+.current-link {
+    background-color: #555;
+    color: #fff;
 }
+
 /* Header Styles */
 .page__header {
     background: #fff;
