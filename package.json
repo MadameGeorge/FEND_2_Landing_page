@@ -1,0 +1,25 @@
+{
+  "name": "fend_2_landing_page",
+  "version": "1.0.0",
+  "description": "## Table of Contents",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MadameGeorge/FEND_2_Landing_page.git"
+  },
+  "keywords": [
+    "udacity"
+  ],
+  "author": "Magda Powalisz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MadameGeorge/FEND_2_Landing_page/issues"
+  },
+  "homepage": "https://github.com/MadameGeorge/FEND_2_Landing_page#readme",
+  "devDependencies": {
+    "eslint": "^7.1.0"
+  }
+}
