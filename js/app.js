@@ -46,7 +46,6 @@
         )
     }
 
-
 /**
  * End Helper Functions
  * Begin Main Functions
@@ -87,10 +86,30 @@
                 section.classList.remove('your-active-class');
             }
         });
-
     }
 
-     // Add an active state to your navigation items when a section is in the viewport.
+    // Make sections collapsible
+    function collapseSections() {
+        let sectionBars = Array.from(document.querySelectorAll('.section__bar'));
+
+        sectionBars.forEach( sectionBar => {
+            sectionBar.addEventListener('click', () => {
+                let sectionText = sectionBar.nextElementSibling;
+                sectionText.classList.toggle('collapsed');
+            })
+        })
+    }
+
+     // Make navbar collapsible on small devices
+     function collapseNavBar() {
+        let navBarToggle = document.querySelector('.navbar__toggle');
+
+        navBarToggle.addEventListener('click', () => {
+            navBar.classList.toggle('collapsed');
+        })
+    }
+
+    // Add an active state to your navigation items when a section is in the viewport.
     function addActiveStateLink() {
         let navLinks = document.getElementsByClassName('menu__link');
         
@@ -102,6 +121,24 @@
             }
         };
     }
+
+    // Hide fixed navigation bar while not scrolling (it should still be present on page load).
+    // Hint: setTimeout can be used to check when the user is no longer scrolling.
+    const header = document.querySelector('header');
+
+    function hideNav() {
+        let userStoppedScrolling;
+        let notAtTop = window.pageYOffset > 150;
+        
+        window.clearTimeout(userStoppedScrolling);
+        header.classList.remove('hidden');
+        
+        if (notAtTop === true) {
+            userStoppedScrolling = window.setTimeout( () => {
+                header.classList.add('hidden');
+            }, 1000);
+        }
+    }               
 
     // Add a scroll to top button of the page that’s only visible when the user scrolls below the fold of the page
     function showButton() {
@@ -118,7 +155,6 @@
             scrollButton.classList.add('hidden');
         }
     }
-
 
     // Scroll to anchor ID using scrollTO event
     function scrollToSection(){
@@ -139,59 +175,25 @@
         })
     }
 
-    // Hide fixed navigation bar while not scrolling (it should still be present on page load).
-    // Hint: setTimeout can be used to check when the user is no longer scrolling.
-    let userHasScrolled = false;
-    let userHasHovered = false;
-    const header = document.querySelector('header');
-
-    function hideNav() {
-        let userStoppedScrolling;
-        if (document.body.scrollTop > 100 || 
-            document.documentElement.scrollTop > 100) {
-                console.log('false');
-            if (userHasScrolled === true) {
-                window.clearTimeout(userStoppedScrolling);
-                header.classList.remove('hidden');
-            }
-
-            userStoppedScrolling = window.setTimeout( () => {
-                header.classList.add('hidden');
-            }, 1500);
-        }   
-    }
-
-  
-
 /**
  * End Main Functions
  * Begin Events
  * 
 */
 
-    // Build menu 
-    buildNav();
+    // Activate after DOM content loads functions 
+    document.addEventListener('DOMContentLoaded', () => {
+        buildNav(); // Build menu 
+        scrollToSection(); // Scroll to section on link click
+        collapseSections(); // Collapse/expand section on click
+        collapseNavBar(); //Collapse/expand on icon click
+    });
 
-    // Scroll to section on link click
-    scrollToSection();
-
-    // Detect scrolling
-    window.onscroll = () => {
-        userHasScrolled = true;
-    } 
-
-    // Detect if user hovers over the navbar
-    header.onmouseover = () => {
-        userHasHovered = true;
-        console.log('hovering');
-    }
-
+    
     // Activate scroll functions 
     window.addEventListener('scroll', () => { 
         addActiveStateSection(); // Set sections as active
         showButton(); // Display button on scroll
-        hideNav();
-        addActiveStateLink();
-    });
-
-    // Make sections collapsible
+        hideNav(); // Hide nav when scrolling 
+        addActiveStateLink(); // Highlight navbar link when section is in view
+    });    

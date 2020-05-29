@@ -34,7 +34,6 @@ h1 {
 }
 
 h2 {
-    border-bottom: 1px solid #cc1;
     font-family: 'Oxygen', Sans-Serif;
     font-size: 3em;
     color: #fff;
@@ -61,13 +60,33 @@ main {
 
 section {
     position: relative;
-    min-height: 80vh;
 }
 
+.section__bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 90px;
+    border-bottom: 1px solid #cc1;
+    border-top: 1px solid #cc1;
+}
+
+.section__bar:hover {
+    background-color: rgba(0,13,60,0.3);
+    cursor: pointer;
+}
+
+.collapsed {
+    display: none;
+}
 
 /* ---- Module Rules ---- */
 
 /* Navigation Styles*/
+.navbar__bar {
+    display: none;
+}
+
 .navbar__menu ul {
     text-align: right;
     height: auto;
@@ -88,13 +107,13 @@ section {
 }
 
 .menu__link:hover {
-    background: #000;
+    background-color: #000;
     color: #fff;
     transition: ease 0.3s all;
 }
 
 .menu__link:active {
-    background: #999;
+    background-color: #999;
 }
 
 .current-link {
@@ -105,7 +124,7 @@ section {
 /* Header Styles */
 .page__header {
     background: #fff;
-    position: fixed;
+    position: sticky;
     top: 0;
     width: 100%;
     z-index: 5;
@@ -252,4 +271,34 @@ section.your-active-class .landing__container::after {
 		           translate(-1em) 
 		           rotate(-360deg);
 	}
+}
+
+@media only screen and (max-width: 615px) {
+    .navbar__bar {
+        display: block;
+        height: auto;
+    }
+
+    .navbar__toggle {
+        background-image: url('/images/bars-solid.svg');
+        background-repeat: no-repeat;
+        background-position: right;
+        background-size: contain;
+        background-origin: content-box;
+        height: 50px;
+        width: 50px;
+        text-align: right;
+        margin: 0 0 0 auto;
+        padding: 25px;
+        color: rgba(0,13,60,1);
+        cursor: pointer;
+    }
+
+    .navbar__menu li {
+        display: block;
+    }
+
+    #navbar__list {
+        padding-bottom: 20px;
+    }
 }
