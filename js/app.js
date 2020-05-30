@@ -54,23 +54,14 @@ function isBelowFold(element) {
 // Build the nav
 function buildNav() {
 	sections.forEach( section => {
-		// Select section title
 		let navLabel = section.getAttribute('data-nav');
-		// Create a list element and save as navList
 		let navList = document.createElement('li');
-		// Create an 'a' element and save as navLink
 		let navLink = document.createElement('a');
-		// Add class to navigation link
 		navLink.classList.add('menu__link');
-		// Select section id text and add as href
 		let hrefText = section.getAttribute('id');
-		// Add hash to a id name and add it to the href attribute of navLink
 		navLink.href = '#' + hrefText;
-		// Add 'a' to list element in the nav
 		navList.appendChild(navLink);
-		// Add label to 'a'
 		navLink.textContent = navLabel;
-		// Append list element to the navigation
 		navBar.appendChild(navList);
 	});
 }
