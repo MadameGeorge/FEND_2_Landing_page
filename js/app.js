@@ -195,3 +195,8 @@ window.addEventListener('scroll', () => {
 	hideNav(); // Hide nav when scrolling
 	addActiveStateLink(); // Highlight navbar link when section is in view
 });
+
+// Activate onmousemove function
+header.addEventListener('mouseover' , () => {
+	header.classList.remove('hidden');
+});
