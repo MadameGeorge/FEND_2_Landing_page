@@ -123,9 +123,9 @@ function addActiveStateLink() {
 // Hide fixed navigation bar while not scrolling (it should still be present on page load).
 // Hint: setTimeout can be used to check when the user is no longer scrolling.
 const header = document.querySelector('header');
+let userStoppedScrolling;
 
 function hideNav() {
-	let userStoppedScrolling;
 	let notAtTop = window.pageYOffset > 150;
 
 	window.clearTimeout(userStoppedScrolling);
